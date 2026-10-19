@@ -144,6 +144,11 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private final BroadcastReceiver mTermuxActivityBroadcastReceiver = new TermuxActivityBroadcastReceiver();
 
     /**
+     * Amnesia Edition: Dynamic OTG / USB Disconnect Monitor
+     */
+    private OtgMonitor mOtgMonitor;
+
+    /**
      * The last toast shown, used cancel current toast before showing new in {@link #showToast(String, boolean)}.
      */
     Toast mLastToast;
@@ -299,6 +304,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             addTermuxActivityRootViewGlobalLayoutListener();
 
         registerTermuxActivityBroadcastReceiver();
+        registerOtgMonitor(); // Amnesia Edition: Register OTG / USB disconnect listener dynamically
     }
 
     @Override
@@ -341,6 +347,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         removeTermuxActivityRootViewGlobalLayoutListener();
 
         unregisterTermuxActivityBroadcastReceiver();
+        unregisterOtgMonitor(); // Amnesia Edition: Unregister OTG listener safely
         getDrawer().closeDrawers();
     }
 
@@ -926,6 +933,37 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     private void unregisterTermuxActivityBroadcastReceiver() {
         unregisterReceiver(mTermuxActivityBroadcastReceiver);
+    }
+
+    /**
+     * Amnesia Edition: Dynamically register OtgMonitor receiver
+     */
+    private void registerOtgMonitor() {
+        try {
+            if (mOtgMonitor == null) {
+                mOtgMonitor = new OtgMonitor(this, this);
+            }
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
+            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            filter.addDataScheme("file");
+            registerReceiver(mOtgMonitor, filter);
+        } catch (Exception e) {
+            Logger.logError(LOG_TAG, "Failed to register OtgMonitor: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Amnesia Edition: Unregister OtgMonitor receiver safely
+     */
+    private void unregisterOtgMonitor() {
+        try {
+            if (mOtgMonitor != null) {
+                unregisterReceiver(mOtgMonitor);
+            }
+        } catch (Exception e) {
+            // Receiver might not be registered, safe to ignore
+        }
     }
 
     private void fixTermuxActivityBroadcastReceiverIntent(Intent intent) {
