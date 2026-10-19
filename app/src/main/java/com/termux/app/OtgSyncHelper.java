@@ -20,7 +20,7 @@ public class OtgSyncHelper {
 
     // Explicit and strict security warning message
     public static final String CRITICAL_AMNESIA_WARNING = 
-        "CRITICAL AMNESIA WARNING: Do not remove the OTG drive or close the app during data transfer or sync! " +
+        "🚨 CRITICAL AMNESIA WARNING: Do not remove the OTG drive or close the app during data transfer or sync! " +
         "Disconnecting before reaching 100% and 'DONE' will cause:\n" +
         "1. Permanent data corruption of your files.\n" +
         "2. Triggering the security protocol to immediately kill active sessions and perform an emergency workspace wipe!\n" +
@@ -30,7 +30,7 @@ public class OtgSyncHelper {
      * input -p: Import data from OTG to Terminal local workspace
      */
     public static void importFromOtg(File otgSourceDir, File localDestDir, SyncCallback callback) {
-        if (!otgSourceDir.exists() || !otgSourceDir.isDirectory()) {
+        if (otgSourceDir == null || !otgSourceDir.exists() || !otgSourceDir.isDirectory()) {
             if (callback != null) callback.onError("OTG storage not found or unmounted!");
             return;
         }
@@ -55,6 +55,11 @@ public class OtgSyncHelper {
      * update -p: Export/Update data from Terminal local workspace back to OTG
      */
     public static void updateToOtg(File localSourceDir, File otgDestDir, SyncCallback callback) {
+        if (localSourceDir == null || !localSourceDir.exists()) {
+            if (callback != null) callback.onError("Local source directory does not exist!");
+            return;
+        }
+
         if (!otgDestDir.exists()) {
             otgDestDir.mkdirs();
         }
@@ -78,7 +83,7 @@ public class OtgSyncHelper {
     private static void copyDirectoryWithProgress(File source, File destination, SyncCallback callback) throws IOException {
         if (source.isDirectory()) {
             if (!destination.exists()) {
-                destination.mkdir();
+                destination.mkdirs();
             }
             String[] children = source.list();
             if (children != null) {
@@ -96,15 +101,20 @@ public class OtgSyncHelper {
                 }
             }
         } else {
-            InputStream in = new FileInputStream(source);
-            OutputStream out = new FileOutputStream(destination);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = in.read(buffer)) > 0) {
-                out.write(buffer, 0, length);
+            // Ensure parent directories exist for files
+            File parentDir = destination.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
             }
-            in.close();
-            out.close();
+
+            try (InputStream in = new FileInputStream(source);
+                 OutputStream out = new FileOutputStream(destination)) {
+                byte[] buffer = new byte[8192];
+                int length;
+                while ((length = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, length);
+                }
+            }
         }
     }
 }
