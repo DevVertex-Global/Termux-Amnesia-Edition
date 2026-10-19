@@ -12,7 +12,7 @@ public class WorkspaceCleaner {
      * Executes scoped emergency cleanup of temporary workspaces and caches.
      * Verified deletion results for audit compliance.
      */
-    public static boolean cleanWorkspace(Context context) {
+    public static boolean wipeTemporaryWorkspace(Context context) {
         boolean allClean = true;
 
         Log.i(TAG, " Starting Amnesia Scoped Workspace Cleanup...");
@@ -33,7 +33,7 @@ public class WorkspaceCleaner {
         if (cacheDir != null && cacheDir.exists()) {
             if (!deleteRecursively(cacheDir)) {
                 allClean = false;
-                Log.e(TAG, "  Failed to completely erase app cache");
+                Log.e(TAG, " Failed to completely erase app cache");
             } else {
                 Log.i(TAG, " Successfully erased app cache workspace");
             }
