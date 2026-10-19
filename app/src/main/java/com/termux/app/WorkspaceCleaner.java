@@ -24,7 +24,7 @@ public class WorkspaceCleaner {
                 allClean = false;
                 Log.e(TAG, " Failed to completely erase usr/tmp directory");
             } else {
-                Log.i(TAG, "  Successfully erased usr/tmp workspace");
+                Log.i(TAG, " Successfully erased usr/tmp workspace");
             }
         }
 
@@ -33,7 +33,7 @@ public class WorkspaceCleaner {
         if (cacheDir != null && cacheDir.exists()) {
             if (!deleteRecursively(cacheDir)) {
                 allClean = false;
-                Log.e(TAG, " Failed to completely erase app cache");
+                Log.e(TAG, "  Failed to completely erase app cache");
             } else {
                 Log.i(TAG, " Successfully erased app cache workspace");
             }
@@ -82,4 +82,3 @@ public class WorkspaceCleaner {
         return success && deleted;
     }
 }
-Direct
