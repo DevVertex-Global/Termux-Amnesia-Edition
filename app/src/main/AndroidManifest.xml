@@ -191,17 +191,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- Amnesia Edition: OTG / USB Disconnect Receiver -->
-        <receiver
-            android:name=".OtgMonitor"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
-                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
-                <data android:scheme="file" />
-            </intent-filter>
-        </receiver>
-
         <receiver
             android:name=".shared.activities.ReportActivity$ReportActivityBroadcastReceiver"
             android:exported="false" />
