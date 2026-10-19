@@ -20,7 +20,7 @@ public class OtgSyncHelper {
 
     // Explicit and strict security warning message
     public static final String CRITICAL_AMNESIA_WARNING = 
-        "🚨 CRITICAL AMNESIA WARNING: Do not remove the OTG drive or close the app during data transfer or sync! " +
+        "  CRITICAL AMNESIA WARNING: Do not remove the OTG drive or close the app during data transfer or sync! " +
         "Disconnecting before reaching 100% and 'DONE' will cause:\n" +
         "1. Permanent data corruption of your files.\n" +
         "2. Triggering the security protocol to immediately kill active sessions and perform an emergency workspace wipe!\n" +
