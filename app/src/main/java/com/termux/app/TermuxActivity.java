@@ -985,7 +985,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_NOTIFY_APP_CRASH);
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_RELOAD_STYLE);
-        intentFilter.addAction(TERMUX_ACTIVITY.Action_REQUEST_PERMISSIONS); // Note: keep original or use ACTION_REQUEST_PERMISSIONS
+        intentFilter.addAction(TERMUX_ACTIVITY.ACTION_REQUEST_PERMISSIONS); // Fixed: ACTION instead of Action
 
         registerReceiver(mTermuxActivityBroadcastReceiver, intentFilter);
     }
