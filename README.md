@@ -153,11 +153,14 @@ curl -sSL https://raw.githubusercontent.com/legendhuzifa-dev/Termux-Amnesia-Edit
 ```
 source $PREFIX/etc/bash.bashrc
 ```
-## 3. To update or export data via OTG:
+## 3. To input or import data from OTG:
 ```
 input -p
 ```
-## 4. 
+## 4. To update or export data to OTG
+```
+update -p
+```
 
 
 Inspect the Source
