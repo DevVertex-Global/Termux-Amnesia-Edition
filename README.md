@@ -1,45 +1,165 @@
+<div align="center">
 
+# 🛡️ Termux: Amnesia Edition
 
-# 🛡️ Termux: Amnesia Edition (v1.0.0 Complete) > **The Pioneer Portable Anti-Forensic Framework for Android** > Developed and Maintained by **DevVertex-Global** (`legendhuzifa-dev`) --- ## 📌 Overview & Architecture **Termux: Amnesia Edition (v1.0.0)** is a lightweight, mobile-first anti-forensic workspace environment built on top of Termux. Designed for researchers, security analysts, and privacy advocates, it offers a secure, zero-trace terminal workspace isolated via physical OTG hardware and routed through Tor network gateways. In **Version 1**, the framework focuses on absolute physical security, volatile memory isolation, and safe OTG synchronization without requiring root privileges for core functionalities. --- ## 🔑 Key Features & Core Specifications * **Hardware OTG Isolation:** Workspace memory operates strictly inside an external OTG drive, keeping zero persistent data on the phone's internal storage. * **Emergency Physical Auto-Wipe:** Instant volatile memory and history sanitization upon physical unplugging of the OTG drive. * **USB Data Integrity Safeguard:** Disconnecting the OTG drive wipes local session traces **without corrupting or deleting any data stored inside the USB drive itself**. * **Tor Main Gate Gateway:** Native support for routing Termux traffic through Tor proxy gateways (`127.0.0.1:9050`). * **Non-Root System Protection:** Fully functional on non-rooted Android devices using standard VPN service interfaces and user-space tools. --- ## ⚙️ How to Install & Initialize (One-Click Setup) You can configure the entire environment in Termux with a single automated command: ```bash curl -sL [https://raw.githubusercontent.com/DevVertex-Global/Termux-Amnesia-Edition/main/setup.sh](https://raw.githubusercontent.com/DevVertex-Global/Termux-Amnesia-Edition/main/setup.sh) | bash 
+### Your workspace. Your hardware. Your privacy.
 
-🚀 Core Command Reference & Usage Guide
+**A portable, OTG-backed privacy workspace concept for Android — built for Termux.**
 
-Once initialized via setup.sh, you can manage your persistent session using these dedicated system commands:
+[![Version](https://img.shields.io/badge/version-1.0.0-00d9a6?style=for-the-badge)](https://github.com/DevVertex-Global/Termux-Amnesia-Edition)
+[![Platform](https://img.shields.io/badge/platform-Android-3ddc84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com/)
+[![Termux](https://img.shields.io/badge/environment-Termux-111111?style=for-the-badge)](https://termux.dev/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-7c5cff?style=for-the-badge)](LICENSE)
 
-CommandFunction / UsageWhen to Usetermux-loadMounts and syncs the OTG workspace into the isolated local Termux session.Run this right after plugging in your OTG drive to bring your saved work live.termux-pushBackup & sync newly created or modified local files back into the OTG drive.Run this periodically or right before ending your session to save your work.termux-wipeManually clears temporary caches ($PREFIX/tmp/*), shell history (.bash_history), and volatile session traces.Run this anytime you want to clean up local volatile storage manually.termux-exitTriggers a manual emergency exit sequence, killing active networks and closing the shell.Use during high-risk scenarios for an immediate session destruction. 
+**Developed by [DevVertex-Global](https://github.com/DevVertex-Global) · Maintainer: [@legendhuzifa-dev](https://github.com/legendhuzifa-dev)**
 
-🚨 Emergency Auto-Wipe Mechanism (V1 Physical Disconnect)
+[⭐ Star this project](https://github.com/DevVertex-Global/Termux-Amnesia-Edition) · [🐛 Report a bug](https://github.com/DevVertex-Global/Termux-Amnesia-Edition/issues) · [💡 Request a feature](https://github.com/DevVertex-Global/Termux-Amnesia-Edition/issues)
 
-How It Works:
+</div>
 
-Real-time Watchdog: The system continuously monitors the physical OTG path (/storage/XXXX-XXXX/).
+---
 
-Physical Unplug Action: If the OTG drive is pulled out or unplugged from the smartphone:
+## ⚡ What is Amnesia Edition?
 
-All active background tasks and shell processes are immediately killed.
+**Termux: Amnesia Edition** aims to make privacy-conscious terminal work on Android easier to manage by using an external OTG drive as a portable workspace, with helper commands for loading, syncing, and clearing local session artifacts.
 
-All temporary cache directories ($PREFIX/tmp/*) are forcefully wiped.
+> [!IMPORTANT]
+> **Security claims must match the implementation.** OTG storage alone does not guarantee zero internal-storage writes, volatile-memory isolation, complete forensic erasure, or automatic cleanup on unplug. Treat this project as a work in progress until each safeguard has been implemented and independently tested.
 
-Shell history (~/.bash_history) is sanitized instantly.
+## ✨ Features
 
-Hardware Safety: The emergency unmount logic protects the USB file system structure from write-corruption. All data on the physical USB drive remains 100% intact and uncorrupted.
+<table>
+<tr>
+<td width="50%">
 
-📂 Data Lifecycle Management
+### 🔌 OTG-backed workspace
+Keep project files on compatible external storage and sync them when needed.
 
-[ Plug OTG Drive ] ──► `termux-load` ──► Work inside Termux ──► `termux-push` ──► [ Unplug OTG ] │ (Triggers Auto-Wipe / Zero Local Footprint) 
+</td>
+<td width="50%">
 
-Loading Data: Connect your OTG drive and execute termux-load. Your files will be imported into a non-persistent sandbox.
+### 🧹 Session cleanup
+Provide a manual cleanup command for selected temporary files and shell history.
 
-Working Safely: Execute scripts, run tests, or modify tools inside Termux.
+</td>
+</tr>
+<tr>
+<td width="50%">
 
-Saving/Unloading Data: Execute termux-push to save changes back to your physical USB storage.
+### 🧅 Tor proxy support
+Document optional user-space proxy configuration for tools that support SOCKS5.
 
-Session Termination: Safely remove the OTG drive or run termux-exit. The local environment will reset to a clean slate.
+</td>
+<td width="50%">
 
-⚖️ License & Intellectual Property
+### 📱 No root required
+Designed around Termux and standard Android user-space capabilities; device and Android-version limitations apply.
 
-Distributed under the MIT License.
+</td>
+</tr>
+</table>
 
-Copyright (c) 2026 DevVertex-Global (Led by legendhuzifa-dev) 
+## 🚀 Quick start
 
-All architecture models, command structures, and implementation logic of Termux: Amnesia Edition are officially maintained and published by DevVertex-Global.
+Install [Termux from a trusted source](https://github.com/termux/termux-app), connect your OTG drive, and review the setup script before running it.
+
+```bash
+pkg update && pkg upgrade
+pkg install git
+git clone https://github.com/DevVertex-Global/Termux-Amnesia-Edition.git
+cd Termux-Amnesia-Edition
+```
+
+**Review the installer first:**
+
+```bash
+less setup.sh
+```
+
+If you have verified what the script does and trust its source, run:
+
+```bash
+bash setup.sh
+```
+
+> Avoid piping a remote script directly into `bash` unless you have inspected and trust the script. Installation behavior may vary by device and repository version.
+
+## 🧰 Command reference
+
+| Command | Purpose |
+|---|---|
+| `termux-load` | Load or sync workspace files from the OTG drive, if implemented and configured |
+| `termux-push` | Save local changes back to the OTG drive, if implemented and configured |
+| `termux-wipe` | Clear only the temporary paths and history entries explicitly handled by the script |
+| `termux-exit` | Run the configured session-exit routine, if implemented |
+
+> **Note:** These commands are available only if the repository's setup script actually installs them. Check the source and test on non-critical data before relying on them.
+
+## 🔄 Intended workflow
+
+```text
+  🔌 Connect OTG
+       │
+       ▼
+  termux-load
+       │
+       ▼
+  Work in Termux
+       │
+       ▼
+  termux-push
+       │
+       ▼
+  Safely unmount and disconnect
+```
+
+**Recommended habit:** sync your work, verify the copied files, and unmount the drive using a method supported by your device before unplugging it.
+
+## 🛡️ Important security notes
+
+- **No “zero trace” guarantee:** Android, Termux, apps, logs, caches, swap, and flash storage may retain data outside the cleanup paths.
+- **Unplug detection is not a security boundary:** a user-space watcher may stop, miss events, or lack permission to observe the storage path.
+- **Avoid destructive assumptions:** test cleanup and disconnect behavior with disposable files first.
+- **Tor is not automatic anonymity:** only traffic explicitly routed through a correctly configured proxy uses that route; DNS leaks and unsupported applications are possible.
+- **USB data safety needs testing:** abrupt removal during writes can corrupt files. Always sync and unmount before disconnecting.
+- **Do not store secrets casually:** use encryption and sound key management for sensitive material.
+
+## 🗺️ Roadmap
+
+- [ ] Verify OTG mount detection across supported Android versions
+- [ ] Add safe sync checks and clear error handling
+- [ ] Test cleanup scope and document exactly what is removed
+- [ ] Add automated tests for disconnect and interrupted-write scenarios
+- [ ] Document Tor configuration, limitations, and leak testing
+- [ ] Publish reproducible test results and a threat model
+
+## 🤝 Contributing
+
+Contributions, bug reports, security reviews, and documentation improvements are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Test changes on a non-critical setup.
+4. Open a pull request with clear steps to reproduce and test.
+
+For security-sensitive issues, avoid posting exploit details publicly until maintainers have a responsible disclosure process.
+
+## ⭐ Support the project
+
+If this project is useful or you want to follow its progress:
+
+- ⭐ **Star the repository** to show support.
+- 🐛 Report reproducible bugs through [Issues](https://github.com/DevVertex-Global/Termux-Amnesia-Edition/issues).
+- 💬 Share ideas and improvements.
+- 🔀 Contribute code, tests, or documentation.
+
+<div align="center">
+
+### 🔐 Privacy deserves thoughtful engineering.
+
+**Built by DevVertex-Global**  
+MIT License · Copyright © 2026 DevVertex-Global
+
+[⬆ Back to top](#-termux-amnesia-edition)
+
+</div>
