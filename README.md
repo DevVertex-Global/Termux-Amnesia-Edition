@@ -289,5 +289,10 @@ Use at your own risk. Test in a non-critical environment and maintain independen
 <p align="center">
   <strong>Termux: Amnesia Edition</strong><br>
   Experimental privacy automation for Android.<br>
-  Developed and maintained by <a href="https://github.com/legendhuzifa-dev">DevVertex-Global</a>
+  Developed and mainta<img width="720" height="1612" alt="1000123059" src="https://github.com/user-attachments/assets/b8e148a1-82f6-4f43-95a0-eb520f9a04b9" />
+<img width="720" height="1612" alt="1000123060" src="https://github.com/user-attachments/assets/7723dace-aeec-4e0f-a951-461d26c20cef" />
+<img width="720" height="1612" alt="1000123062" src="https://github.com/user-attachments/assets/9e72723f-c860-4b17-bb62-24cbefa5fb09" />
+<img width="720" height="1612" alt="1000123063" src="https://github.com/user-attachments/assets/67a18a03-c04a-4e21-9f2d-36fa5b044bee" />
+<img width="720" height="1612" alt="1000123064" src="https://github.com/user-attachments/assets/e0289487-dce4-48b1-8d91-6c54bea043fb" />
+ined by <a href="https://github.com/legendhuzifa-dev">DevVertex-Global</a>
 </p>
