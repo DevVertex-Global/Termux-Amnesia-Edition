@@ -1,115 +1,92 @@
-# 🛡️ Termux: Amnesia Edition
+Termux: Amnesia Edition
 
-> **A Hardware-Triggered Emergency Anti-Forensic Termux Distribution for Android.**
+A privacy-focused, hardware-triggered emergency cleanup experiment for Termux on Android.
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Termux-green.svg)](#)
-[![Status](https://img.shields.io/badge/Status-Core%20Engine%20Ready-brightgreen.svg)](#)
+Termux: Amnesia Edition explores whether a Termux-based Android environment can detect selected USB/OTG disconnect events and trigger a predefined cleanup and session-shutdown workflow.
 
----
+The project focuses on emergency response, temporary workspace cleanup, and transparent, user-configurable privacy controls.
 
-## 📌 Overview
+«Project status: Experimental. Some features may be incomplete or under development. Review the source code and test the behavior on a non-critical device before use.»
 
-**Termux: Amnesia Edition** is an innovative, privacy-focused Android terminal environment built upon the core Termux framework. It introduces a hardware-level panic switch designed to protect sensitive runtime data during physical or environmental threats.
+✨ Features
 
-By monitoring external OTG storage devices and media unmount events, the **Amnesia Core Engine** instantly triggers a graceful shutdown sequence—wiping sensitive scoped temporary workspaces and terminating active sessions before data can be extracted.
+- USB/OTG event monitoring — Attempts to detect supported USB device detach and media-unmount events.
+- Emergency controller — Intended to coordinate the configured response when a monitored event occurs.
+- Workspace cleanup — Provides cleanup logic for selected temporary files and application cache locations.
+- Session shutdown — Attempts to stop the application’s active session and related processes.
+- Android integration — Uses Android application components to connect monitoring and cleanup functionality.
 
----
+Feature availability depends on implementation status, Android version, permissions, and device behavior.
 
-## 🔥 Key Features
+🎯 Why This Project?
 
-* **🔌 Hardware-Level Detach Trigger:** Real-time event detection via `OtgMonitor` listening for `ACTION_USB_DEVICE_DETACHED` and `ACTION_MEDIA_UNMOUNTED`.
-* **⚡ Amnesia Controller (`AmnesiaController`):** Central security coordinator that handles emergency event dispatching and orchestrates rapid response workflows.
-* **🧹 Scoped Workspace Cleaner (`WorkspaceCleaner`):** Selectively targets and wipes volatile runtime directories (`usr/tmp` and internal volatile caches) without destroying base system binaries.
-* **🛑 Graceful & Absolute Process Termination (`SessionShutdownManager`):** Ensures all active sub-processes, shell sessions, and background threads are cleanly killed to prevent memory leakage or zombie processes.
+Sensitive work may leave temporary files, caches, or active terminal sessions behind.
 
----
+Amnesia Edition explores a hardware-triggered workflow for reducing selected local traces after a configured event. It is intended as an experimental privacy tool, not as a guarantee of complete data erasure or anonymity.
 
-## 🏗️ Architecture & Security Workflow
+⚙️ How It Works
 
-When an OTG device is forcibly removed or unmounted, the security pipeline executes within milliseconds:
+1. The application monitors supported USB/OTG or media events.
+2. A recognized event is passed to the emergency-control workflow.
+3. The configured cleanup routines target selected temporary locations.
+4. The session-shutdown component attempts to stop the relevant application processes.
 
-```bash
-──────────────────────────┐
-│   Hardware Disconnect    │  (OTG Unplug / Media Unmount)
-└────────────┬─────────────┘
-│
-▼
-┌──────────────────────────┐
-│        OtgMonitor        │  (Captures Android Broadcast)
-└────────────┬─────────────┘
-│
-▼
-┌──────────────────────────┐
-│    AmnesiaController     │  (Validates Threat & Coordinates Response)
-└────────────┬─────────────┘
-│
-┌───────┴────────────────────────┐
-▼                                ▼
-┌──────────────────────────┐     ┌──────────────────────────┐
-│     WorkspaceCleaner     │     │ SessionShutdownManager   │
-│  (Purges usr/tmp & cache)│     │  (Kills all background)  │
-└──────────────────────────┘     └─────────────┬────────────┘
-│
-▼
-┌──────────────────────────┐
-│     TermuxService Stop   │
-└──────────────────────────┘
-```
+The actual behavior must be verified against the current source code and tested on supported devices.
 
+📱 Platform
 
----
+- Android
+- Termux-based environment
+- Java and Android application components
 
-## 🛠️ Project Structure & Key Components
+See the source code and build configuration for exact compatibility requirements.
 
-* `app/src/main/AndroidManifest.xml` — Handles Android permissions and broadcast receiver bindings.
-* `TermuxActivity.java` — UI Lifecycle & Amnesia interaction management.
-* `TermuxService.java` — Session management hooked directly into the Amnesia termination cycle.
-* `OtgMonitor.java` — Broadcast receiver listening for physical disconnect triggers.
-* `AmnesiaController.java` — Central command unit managing security logic execution.
-* `SessionShutdownManager.java` — Force-kills background threads and active shell trees.
-* `WorkspaceCleaner.java` — Scoped wipe engine targeting sensitive ephemeral directories.
+🚧 Development Status
 
----
+This project is experimental.
 
-## 🎯 Design Philosophy & Emergency Scope
+Before describing a feature as complete, verify that it:
 
-**Termux: Amnesia Edition** is engineered for tactical privacy and rapid situational sanitization, **not** as a destructive system wiper. We maintain absolute technical transparency regarding its operational scope:
+- Builds successfully.
+- Detects the intended event on a real device.
+- Cleans only the configured target paths.
+- Handles permissions and failures safely.
+- Passes repeatable tests.
 
-### What Amnesia Edition Does NOT Do:
-- **No Full Device Wiping**: It does not touch your entire phone storage, system partitions, or unrelated application data. It respects the Android app sandboxing architecture.
-- **No Digital Erasure**: It is not a magical tool that wipes your digital footprint off the global internet or external servers.
+Track incomplete features and planned work in the repository’s Issues and project documentation.
 
-### What Amnesia Edition ACTUALLY Does:
-- **Targeted Workspace Sanitization (`WorkspaceCleaner`)**: In the event of an unexpected physical threat (e.g., device seizure, forced inspection) or sudden operational hazard, it instantly purges scoped temporary session workspaces (`usr/tmp`) and sensitive application cache where active working files reside.
-- **Emergency Session Teardown (`SessionShutdownManager`)**: Immediately terminates active terminal sessions and background child processes to prevent process leaks, memory retention, or lingering execution states.
-- **Fail-Safe User Protection**: Designed as a rapid-response circuit breaker. If you find yourself in an emergency position where immediate cleanup is necessary, it safely extracts you from the risk zone without destroying your device's core operating environment.
+🔐 Security & Privacy
 
-## 🤝 Contributing
+- Review cleanup targets before enabling automated deletion.
+- Test with disposable files and a non-critical environment.
+- Do not assume that cache cleanup removes every copy of sensitive data.
+- Do not rely on this project as a substitute for device encryption or a verified secure-erasure process.
+- Report security issues privately to the maintainer when an appropriate contact method is available.
 
-Contributions are strictly welcome! Whether you are an Android security researcher, Java developer, or Termux enthusiast, feel free to submit pull requests or open issues to improve hardware filtering and anti-forensic reliability.
+🛠️ Build and Installation
 
-1. Fork the Repository
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Installation instructions will be provided once the build process and supported Android versions have been verified.
 
----
+Do not install unofficial or unverified APKs on a device containing sensitive data.
 
-## 📜 License
+🤝 Contributing
 
-Distributed under the **GPL v3 License**. See `LICENSE` for more information.
+Contributions are welcome.
 
+You can help by:
 
+- Improving USB/OTG event detection.
+- Adding automated tests.
+- Verifying cleanup behavior on different Android versions.
+- Improving documentation and error handling.
+- Reporting reproducible bugs.
 
+Please include your Android version, reproduction steps, expected behavior, and actual behavior in bug reports.
 
-<div align="center">
+📄 License
 
-## MADE WITH ❤️ IN BANGLADESH
+The project license should be specified in the repository’s "LICENSE" file.
 
-### SUPPORT 🇧🇩 🤝 🇵🇸
+⚠️ Disclaimer
 
-*_Built with respect, transparency, and dedication for student developers everywhere._*
-
-</div>
+This software is experimental and provided as-is. Its behavior depends on Android restrictions, device configuration, permissions, and the current implementation. No guarantee of complete data removal, anonymity, or protection against forensic analysis is made.
