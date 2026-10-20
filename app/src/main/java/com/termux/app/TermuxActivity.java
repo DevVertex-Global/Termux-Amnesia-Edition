@@ -144,9 +144,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private final BroadcastReceiver mTermuxActivityBroadcastReceiver = new TermuxActivityBroadcastReceiver();
 
     /**
-     * Amnesia Edition: Dynamic OTG / USB Disconnect Monitor
+     * Amnesia Edition: Emergency cleanup and OTG monitor controller
      */
-    private OtgMonitor mOtgMonitor;
+    private AmnesiaController mAmnesiaController;
 
     /**
      * The last toast shown, used cancel current toast before showing new in {@link #showToast(String, boolean)}.
@@ -936,33 +936,29 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     /**
-     * Amnesia Edition: Dynamically register OtgMonitor receiver
+     * Amnesia Edition: Dynamically register AmnesiaController
      */
     private void registerOtgMonitor() {
         try {
-            if (mOtgMonitor == null) {
-                mOtgMonitor = new OtgMonitor(this, this);
+            if (mAmnesiaController == null) {
+                mAmnesiaController = AmnesiaController.getInstance(this);
             }
-            IntentFilter filter = new IntentFilter();
-            filter.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
-            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-            filter.addDataScheme("file");
-            registerReceiver(mOtgMonitor, filter);
+            mAmnesiaController.startMonitoring();
         } catch (Exception e) {
-            Logger.logError(LOG_TAG, "Failed to register OtgMonitor: " + e.getMessage());
+            Logger.logError(LOG_TAG, "Failed to start AmnesiaController: " + e.getMessage());
         }
     }
 
     /**
-     * Amnesia Edition: Unregister OtgMonitor receiver safely
+     * Amnesia Edition: Stop AmnesiaController safely
      */
     private void unregisterOtgMonitor() {
         try {
-            if (mOtgMonitor != null) {
-                unregisterReceiver(mOtgMonitor);
+            if (mAmnesiaController != null) {
+                mAmnesiaController.stopMonitoring();
             }
         } catch (Exception e) {
-            // Receiver might not be registered, safe to ignore
+            // Safe to ignore if not running
         }
     }
 
