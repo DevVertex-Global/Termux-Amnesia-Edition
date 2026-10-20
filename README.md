@@ -143,13 +143,23 @@ Before using or developing the project, ensure that you have:
 - A safe test environment with disposable files.
 
 Clone the Repository
+
+## Installation command
+
 ```
 curl -sSL https://raw.githubusercontent.com/legendhuzifa-dev/Termux-Amnesia-Edition/master/install.sh | bash
 ```
-## 2.
+## 2. Command to reload the config file (if it doesn't take effect immediately in a new session)
 ```
 source $PREFIX/etc/bash.bashrc
 ```
+## 3. To update or export data via OTG:
+```
+input -p
+```
+## 4. 
+
+
 Inspect the Source
 
 Review the repository files and build configuration before attempting to compile or run the project.
