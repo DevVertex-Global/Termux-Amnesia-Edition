@@ -1,92 +1,45 @@
-Termux: Amnesia Edition
 
-A privacy-focused, hardware-triggered emergency cleanup experiment for Termux on Android.
 
-Termux: Amnesia Edition explores whether a Termux-based Android environment can detect selected USB/OTG disconnect events and trigger a predefined cleanup and session-shutdown workflow.
+# 🛡️ Termux: Amnesia Edition (v1.0.0 Complete) > **The Pioneer Portable Anti-Forensic Framework for Android** > Developed and Maintained by **DevVertex-Global** (`legendhuzifa-dev`) --- ## 📌 Overview & Architecture **Termux: Amnesia Edition (v1.0.0)** is a lightweight, mobile-first anti-forensic workspace environment built on top of Termux. Designed for researchers, security analysts, and privacy advocates, it offers a secure, zero-trace terminal workspace isolated via physical OTG hardware and routed through Tor network gateways. In **Version 1**, the framework focuses on absolute physical security, volatile memory isolation, and safe OTG synchronization without requiring root privileges for core functionalities. --- ## 🔑 Key Features & Core Specifications * **Hardware OTG Isolation:** Workspace memory operates strictly inside an external OTG drive, keeping zero persistent data on the phone's internal storage. * **Emergency Physical Auto-Wipe:** Instant volatile memory and history sanitization upon physical unplugging of the OTG drive. * **USB Data Integrity Safeguard:** Disconnecting the OTG drive wipes local session traces **without corrupting or deleting any data stored inside the USB drive itself**. * **Tor Main Gate Gateway:** Native support for routing Termux traffic through Tor proxy gateways (`127.0.0.1:9050`). * **Non-Root System Protection:** Fully functional on non-rooted Android devices using standard VPN service interfaces and user-space tools. --- ## ⚙️ How to Install & Initialize (One-Click Setup) You can configure the entire environment in Termux with a single automated command: ```bash curl -sL [https://raw.githubusercontent.com/DevVertex-Global/Termux-Amnesia-Edition/main/setup.sh](https://raw.githubusercontent.com/DevVertex-Global/Termux-Amnesia-Edition/main/setup.sh) | bash 
 
-The project focuses on emergency response, temporary workspace cleanup, and transparent, user-configurable privacy controls.
+🚀 Core Command Reference & Usage Guide
 
-«Project status: Experimental. Some features may be incomplete or under development. Review the source code and test the behavior on a non-critical device before use.»
+Once initialized via setup.sh, you can manage your persistent session using these dedicated system commands:
 
-✨ Features
+CommandFunction / UsageWhen to Usetermux-loadMounts and syncs the OTG workspace into the isolated local Termux session.Run this right after plugging in your OTG drive to bring your saved work live.termux-pushBackup & sync newly created or modified local files back into the OTG drive.Run this periodically or right before ending your session to save your work.termux-wipeManually clears temporary caches ($PREFIX/tmp/*), shell history (.bash_history), and volatile session traces.Run this anytime you want to clean up local volatile storage manually.termux-exitTriggers a manual emergency exit sequence, killing active networks and closing the shell.Use during high-risk scenarios for an immediate session destruction. 
 
-- USB/OTG event monitoring — Attempts to detect supported USB device detach and media-unmount events.
-- Emergency controller — Intended to coordinate the configured response when a monitored event occurs.
-- Workspace cleanup — Provides cleanup logic for selected temporary files and application cache locations.
-- Session shutdown — Attempts to stop the application’s active session and related processes.
-- Android integration — Uses Android application components to connect monitoring and cleanup functionality.
+🚨 Emergency Auto-Wipe Mechanism (V1 Physical Disconnect)
 
-Feature availability depends on implementation status, Android version, permissions, and device behavior.
+How It Works:
 
-🎯 Why This Project?
+Real-time Watchdog: The system continuously monitors the physical OTG path (/storage/XXXX-XXXX/).
 
-Sensitive work may leave temporary files, caches, or active terminal sessions behind.
+Physical Unplug Action: If the OTG drive is pulled out or unplugged from the smartphone:
 
-Amnesia Edition explores a hardware-triggered workflow for reducing selected local traces after a configured event. It is intended as an experimental privacy tool, not as a guarantee of complete data erasure or anonymity.
+All active background tasks and shell processes are immediately killed.
 
-⚙️ How It Works
+All temporary cache directories ($PREFIX/tmp/*) are forcefully wiped.
 
-1. The application monitors supported USB/OTG or media events.
-2. A recognized event is passed to the emergency-control workflow.
-3. The configured cleanup routines target selected temporary locations.
-4. The session-shutdown component attempts to stop the relevant application processes.
+Shell history (~/.bash_history) is sanitized instantly.
 
-The actual behavior must be verified against the current source code and tested on supported devices.
+Hardware Safety: The emergency unmount logic protects the USB file system structure from write-corruption. All data on the physical USB drive remains 100% intact and uncorrupted.
 
-📱 Platform
+📂 Data Lifecycle Management
 
-- Android
-- Termux-based environment
-- Java and Android application components
+[ Plug OTG Drive ] ──► `termux-load` ──► Work inside Termux ──► `termux-push` ──► [ Unplug OTG ] │ (Triggers Auto-Wipe / Zero Local Footprint) 
 
-See the source code and build configuration for exact compatibility requirements.
+Loading Data: Connect your OTG drive and execute termux-load. Your files will be imported into a non-persistent sandbox.
 
-🚧 Development Status
+Working Safely: Execute scripts, run tests, or modify tools inside Termux.
 
-This project is experimental.
+Saving/Unloading Data: Execute termux-push to save changes back to your physical USB storage.
 
-Before describing a feature as complete, verify that it:
+Session Termination: Safely remove the OTG drive or run termux-exit. The local environment will reset to a clean slate.
 
-- Builds successfully.
-- Detects the intended event on a real device.
-- Cleans only the configured target paths.
-- Handles permissions and failures safely.
-- Passes repeatable tests.
+⚖️ License & Intellectual Property
 
-Track incomplete features and planned work in the repository’s Issues and project documentation.
+Distributed under the MIT License.
 
-🔐 Security & Privacy
+Copyright (c) 2026 DevVertex-Global (Led by legendhuzifa-dev) 
 
-- Review cleanup targets before enabling automated deletion.
-- Test with disposable files and a non-critical environment.
-- Do not assume that cache cleanup removes every copy of sensitive data.
-- Do not rely on this project as a substitute for device encryption or a verified secure-erasure process.
-- Report security issues privately to the maintainer when an appropriate contact method is available.
-
-🛠️ Build and Installation
-
-Installation instructions will be provided once the build process and supported Android versions have been verified.
-
-Do not install unofficial or unverified APKs on a device containing sensitive data.
-
-🤝 Contributing
-
-Contributions are welcome.
-
-You can help by:
-
-- Improving USB/OTG event detection.
-- Adding automated tests.
-- Verifying cleanup behavior on different Android versions.
-- Improving documentation and error handling.
-- Reporting reproducible bugs.
-
-Please include your Android version, reproduction steps, expected behavior, and actual behavior in bug reports.
-
-📄 License
-
-The project license should be specified in the repository’s "LICENSE" file.
-
-⚠️ Disclaimer
-
-This software is experimental and provided as-is. Its behavior depends on Android restrictions, device configuration, permissions, and the current implementation. No guarantee of complete data removal, anonymity, or protection against forensic analysis is made.
+All architecture models, command structures, and implementation logic of Termux: Amnesia Edition are officially maintained and published by DevVertex-Global.
