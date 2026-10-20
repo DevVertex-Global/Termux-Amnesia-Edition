@@ -72,16 +72,18 @@ When an OTG device is forcibly removed or unmounted, the security pipeline execu
 
 ---
 
-## 🗺️ Roadmap & Current Status
+## 🎯 Design Philosophy & Emergency Scope
 
-- [x] **Core Amnesia Logic Engine** (OtgMonitor → AmnesiaController → WorkspaceCleaner)
-- [x] **Controlled Process & Service Termination** (`SessionShutdownManager`)
-- [x] **Scoped Data Purging** (`usr/tmp` & internal cache)
-- [ ] **Specific USB Identifier Filtering & Android OS Version Handlers** *(In Progress)*
-- [ ] **Cleanup Verification & Post-Recovery UI Prompts** *(Planned)*
-- [ ] **Unit & Integration Test Suites** *(Planned)*
+**Termux: Amnesia Edition** is engineered for tactical privacy and rapid situational sanitization, **not** as a destructive system wiper. We maintain absolute technical transparency regarding its operational scope:
 
----
+### What Amnesia Edition Does NOT Do:
+- **No Full Device Wiping**: It does not touch your entire phone storage, system partitions, or unrelated application data. It respects the Android app sandboxing architecture.
+- **No Digital Erasure**: It is not a magical tool that wipes your digital footprint off the global internet or external servers.
+
+### What Amnesia Edition ACTUALLY Does:
+- **Targeted Workspace Sanitization (`WorkspaceCleaner`)**: In the event of an unexpected physical threat (e.g., device seizure, forced inspection) or sudden operational hazard, it instantly purges scoped temporary session workspaces (`usr/tmp`) and sensitive application cache where active working files reside.
+- **Emergency Session Teardown (`SessionShutdownManager`)**: Immediately terminates active terminal sessions and background child processes to prevent process leaks, memory retention, or lingering execution states.
+- **Fail-Safe User Protection**: Designed as a rapid-response circuit breaker. If you find yourself in an emergency position where immediate cleanup is necessary, it safely extracts you from the risk zone without destroying your device's core operating environment.
 
 ## 🤝 Contributing
 
