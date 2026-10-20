@@ -1,165 +1,128 @@
 <div align="center">
 
-# 🛡️ Termux: Amnesia Edition
+```text
+ _____                    _             ____            _        _     _
+|_   _|__ _ __ _ __ ___  _   _ _ __ ___ |  _ \ ___  _ __| |_ __ _| |__ | | ___
+  | |/ _ \ '__| '_ ` _ \| | | | '_ ` _ \| |_) / _ \| '__| __/ _` | '_ \| |/ _ \
+  | |  __/ |  | | | | | | |_| | | | | | |  __/ (_) | |  | || (_| | |_) | |  __/
+  |_|\___|_|  |_| |_| |_|\__,_|_| |_| |_|_|   \___/|_|   \__\__,_|_.__/|_|\___|
 
-### Your workspace. Your hardware. Your privacy.
+          TAILS-INSPIRED PORTABLE ENVIRONMENT
+```
 
-**A portable, OTG-backed privacy workspace concept for Android — built for Termux.**
+# 🎓 Termux-Portable-Amnesia
 
-[![Version](https://img.shields.io/badge/version-1.0.0-00d9a6?style=for-the-badge)](https://github.com/DevVertex-Global/Termux-Amnesia-Edition)
-[![Platform](https://img.shields.io/badge/platform-Android-3ddc84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com/)
-[![Termux](https://img.shields.io/badge/environment-Termux-111111?style=for-the-badge)](https://termux.dev/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-7c5cff?style=for-the-badge)](LICENSE)
+### ✨ A Tails-Inspired Portable Environment for Termux
 
-**Developed by [DevVertex-Global](https://github.com/DevVertex-Global) · Maintainer: [@legendhuzifa-dev](https://github.com/legendhuzifa-dev)**
+**A zero-budget, mobile-first open-source project for security learners and developers.**
 
-[⭐ Star this project](https://github.com/DevVertex-Global/Termux-Amnesia-Edition) · [🐛 Report a bug](https://github.com/DevVertex-Global/Termux-Amnesia-Edition/issues) · [💡 Request a feature](https://github.com/DevVertex-Global/Termux-Amnesia-Edition/issues)
+![Target](https://img.shields.io/badge/TARGET-MOBILE%20PENTESTERS-blueviolet?style=for-the-badge)
+![Environment](https://img.shields.io/badge/ENVIRONMENT-TERMUX%20%26%20OTG-orange?style=for-the-badge)
+![Privacy](https://img.shields.io/badge/FOCUS-PRIVACY%20%26%20SECURITY-red?style=for-the-badge)
+![License](https://img.shields.io/badge/LICENSE-MIT-green?style=for-the-badge)
+
+*Explore portable Linux workflows from a smartphone, with external storage where supported.*
 
 </div>
 
 ---
 
-## ⚡ What is Amnesia Edition?
+## 🚧 Active Development Notice
 
-**Termux: Amnesia Edition** aims to make privacy-conscious terminal work on Android easier to manage by using an external OTG drive as a portable workspace, with helper commands for loading, syncing, and clearing local session artifacts.
+The project is under development and is being prepared for a planned public release.
 
-> [!IMPORTANT]
-> **Security claims must match the implementation.** OTG storage alone does not guarantee zero internal-storage writes, volatile-memory isolation, complete forensic erasure, or automatic cleanup on unplug. Treat this project as a work in progress until each safeguard has been implemented and independently tested.
+📅 **Planned launch date: 1 November 2026**
 
-## ✨ Features
+Until the source code and release are published, treat this date as a project plan rather than a guarantee. Check this repository for updates.
 
-<table>
-<tr>
-<td width="50%">
+---
 
-### 🔌 OTG-backed workspace
-Keep project files on compatible external storage and sync them when needed.
+## 💙 Our Core Vision
 
-</td>
-<td width="50%">
+> If you have a smartphone, a terminal such as Termux, an OTG cable, and a passion to learn, you can start building useful development skills.
 
-### 🧹 Session cleanup
-Provide a manual cleanup command for selected temporary files and shell history.
+### 🎯 Who is this for?
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+**Termux-Portable-Amnesia** is a learning-focused project for students, self-taught coders, and developers who want to explore portable Linux workflows without needing an expensive computer.
 
-### 🧅 Tor proxy support
-Document optional user-space proxy configuration for tools that support SOCKS5.
+Our goal is to make experimentation more accessible and explain the limits of mobile hardware, Android storage permissions, and external USB storage.
 
-</td>
-<td width="50%">
+---
 
-### 📱 No root required
-Designed around Termux and standard Android user-space capabilities; device and Android-version limitations apply.
+## 🛠️ Tool & Technology Stack
 
-</td>
-</tr>
-</table>
+| Tool / Technology | Intended role | Why it is used |
+| :--- | :--- | :--- |
+| 🐍 **Python & Bash** | Automation and helper scripts | Lightweight and customizable in Termux |
+| 📱 **Termux (Android)** | Main development environment | Enables terminal-based work on a phone |
+| ⚡ **Rsync** | File synchronization | Transfers changed files efficiently when paths and permissions are configured correctly |
+| 🛡️ **Workspace cleanup** | Optional cleanup of project-specific temporary files | Safer than deleting all Termux application data |
+| 💾 **OTG USB drive** | External project storage | Can keep large files off internal storage when Android grants access |
 
-## 🚀 Quick start
+> **Important:** USB access and mount behavior vary by Android version and device. Do not assume that connecting an OTG drive automatically makes it available at a fixed Linux path.
 
-Install [Termux from a trusted source](https://github.com/termux/termux-app), connect your OTG drive, and review the setup script before running it.
+---
 
-```bash
-pkg update && pkg upgrade
-pkg install git
-git clone https://github.com/DevVertex-Global/Termux-Amnesia-Edition.git
-cd Termux-Amnesia-Edition
-```
+## 🎮 Planned Control Commands
 
-**Review the installer first:**
+These commands are planned interfaces. They will only work after the corresponding scripts are implemented, installed, and made executable.
 
-```bash
-less setup.sh
-```
+| Command | Intended action | Description |
+| :--- | :--- | :--- |
+| 🟢 `termux-load` | Load workspace | Prepare or synchronize a workspace from configured storage |
+| 🔵 `termux-push` | Save checkpoint | Copy selected changes back to the configured USB location |
+| 🔴 `termux-wipe` | Clean workspace | Remove only a clearly configured project workspace after confirmation |
 
-If you have verified what the script does and trust its source, run:
+**Safety note:** Never implement an emergency wipe by blindly deleting `/data/data/com.termux`. That can destroy the entire Termux environment and user files. A cleanup script should validate its target path, show what will be deleted, and ask for confirmation.
+
+---
+
+## 🚀 Getting Started
+
+Install the basic tools in Termux:
 
 ```bash
-bash setup.sh
+pkg update
+pkg install python rsync coreutils
+termux-setup-storage
 ```
 
-> Avoid piping a remote script directly into `bash` unless you have inspected and trust the script. Installation behavior may vary by device and repository version.
+Check that the tools are available:
 
-## 🧰 Command reference
-
-| Command | Purpose |
-|---|---|
-| `termux-load` | Load or sync workspace files from the OTG drive, if implemented and configured |
-| `termux-push` | Save local changes back to the OTG drive, if implemented and configured |
-| `termux-wipe` | Clear only the temporary paths and history entries explicitly handled by the script |
-| `termux-exit` | Run the configured session-exit routine, if implemented |
-
-> **Note:** These commands are available only if the repository's setup script actually installs them. Check the source and test on non-critical data before relying on them.
-
-## 🔄 Intended workflow
-
-```text
-  🔌 Connect OTG
-       │
-       ▼
-  termux-load
-       │
-       ▼
-  Work in Termux
-       │
-       ▼
-  termux-push
-       │
-       ▼
-  Safely unmount and disconnect
+```bash
+command -v python
+command -v rsync
 ```
 
-**Recommended habit:** sync your work, verify the copied files, and unmount the drive using a method supported by your device before unplugging it.
+The commands above install prerequisites only. They do **not** install the planned `termux-load`, `termux-push`, or `termux-wipe` commands; those scripts must be included in the project separately.
 
-## 🛡️ Important security notes
-
-- **No “zero trace” guarantee:** Android, Termux, apps, logs, caches, swap, and flash storage may retain data outside the cleanup paths.
-- **Unplug detection is not a security boundary:** a user-space watcher may stop, miss events, or lack permission to observe the storage path.
-- **Avoid destructive assumptions:** test cleanup and disconnect behavior with disposable files first.
-- **Tor is not automatic anonymity:** only traffic explicitly routed through a correctly configured proxy uses that route; DNS leaks and unsupported applications are possible.
-- **USB data safety needs testing:** abrupt removal during writes can corrupt files. Always sync and unmount before disconnecting.
-- **Do not store secrets casually:** use encryption and sound key management for sensitive material.
-
-## 🗺️ Roadmap
-
-- [ ] Verify OTG mount detection across supported Android versions
-- [ ] Add safe sync checks and clear error handling
-- [ ] Test cleanup scope and document exactly what is removed
-- [ ] Add automated tests for disconnect and interrupted-write scenarios
-- [ ] Document Tor configuration, limitations, and leak testing
-- [ ] Publish reproducible test results and a threat model
+---
 
 ## 🤝 Contributing
 
-Contributions, bug reports, security reviews, and documentation improvements are welcome.
+- **Learn and experiment:** Fork the repository and adapt the code for your own learning projects.
+- **Report issues:** Include the exact command, Android version, Termux installation source, and error output.
+- **Improve safely:** Review scripts carefully before running commands that modify or delete files.
+- **Help other learners:** Share clear setup instructions and reproducible bug reports.
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Test changes on a non-critical setup.
-4. Open a pull request with clear steps to reproduce and test.
+---
 
-For security-sensitive issues, avoid posting exploit details publicly until maintainers have a responsible disclosure process.
+## 📌 Project Status
 
-## ⭐ Support the project
+- [ ] Publish and verify the source code
+- [ ] Document USB/OTG access for supported Android versions
+- [ ] Implement and test workspace synchronization
+- [ ] Add safe cleanup safeguards and tests
+- [ ] Provide installation and troubleshooting instructions
 
-If this project is useful or you want to follow its progress:
-
-- ⭐ **Star the repository** to show support.
-- 🐛 Report reproducible bugs through [Issues](https://github.com/DevVertex-Global/Termux-Amnesia-Edition/issues).
-- 💬 Share ideas and improvements.
-- 🔀 Contribute code, tests, or documentation.
+---
 
 <div align="center">
 
-### 🔐 Privacy deserves thoughtful engineering.
+## MADE WITH ❤️ IN BANGLADESH
 
-**Built by DevVertex-Global**  
-MIT License · Copyright © 2026 DevVertex-Global
+### SUPPORT 🇧🇩 🤝 🇵🇸
 
-[⬆ Back to top](#-termux-amnesia-edition)
+*Built with respect, transparency, and dedication for student developers everywhere.*
 
 </div>
