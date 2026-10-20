@@ -65,6 +65,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Arrays;
 
 /**
@@ -282,6 +284,63 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         // Send the {@link TermuxConstants#BROADCAST_TERMUX_OPENED} broadcast to notify apps that Termux
         // app has been opened.
         TermuxUtils.sendTermuxOpenedBroadcast(this);
+        
+        // Amnesia Edition: Automatically inject native OTG commands into bash.bashrc on app launch
+        injectAmnesiaOtgCommands();
+    }
+
+    /**
+     * Amnesia Edition: Auto-injects `update -p` and `input -p` aliases into bash.bashrc
+     */
+    private void injectAmnesiaOtgCommands() {
+        try {
+            File bashrc = new File("/data/data/com.termux/files/usr/etc/bash.bashrc");
+            if (bashrc.exists()) {
+                // Read existing content to avoid duplicate injection
+                java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(bashrc));
+                StringBuilder content = new StringBuilder();
+                String line;
+                boolean alreadyInjected = false;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append("\n");
+                    if (line.contains("Termux Amnesia Edition - OTG Commands")) {
+                        alreadyInjected = true;
+                    }
+                }
+                reader.close();
+
+                if (!alreadyInjected) {
+                    FileWriter writer = new FileWriter(bashrc, true);
+                    writer.write("\n# Termux Amnesia Edition - OTG Commands\n");
+                    writer.write("update() {\n");
+                    writer.write("    if [ \"$1\" = \"-p\" ]; then\n");
+                    writer.write("        if [ -d \"/storage/emulated/0/usb\" ] || [ -d \"/mnt/media_rw\" ]; then\n");
+                    writer.write("            echo \">>> Executing Amnesia OTG Update...\"\n");
+                    writer.write("        else\n");
+                    writer.write("            echo \"❌ [ERROR] OTG Drive is not connected! Please attach your USB drive.\"\n");
+                    writer.write("        fi\n");
+                    writer.write("    else\n");
+                    writer.write("        command update \"$@\" 2>/dev/null || echo \"No command 'update' found\"\n");
+                    writer.write("    fi\n");
+                    writer.write("}\n");
+                    writer.write("input() {\n");
+                    writer.write("    if [ \"$1\" = \"-p\" ]; then\n");
+                    writer.write("        if [ -d \"/storage/emulated/0/usb\" ] || [ -d \"/mnt/media_rw\" ]; then\n");
+                    writer.write("            echo \">>> Executing Amnesia OTG Import...\"\n");
+                    writer.write("        else\n");
+                    writer.write("            echo \"❌ [ERROR] OTG Drive is not connected! Please attach your USB drive.\"\n");
+                    writer.write("        fi\n");
+                    writer.write("    else\n");
+                    writer.write("        command input \"$@\" 2>/dev/null || echo \"No command 'input' found\"\n");
+                    writer.write("    fi\n");
+                    writer.write("}\n");
+                    writer.flush();
+                    writer.close();
+                }
+            }
+        } catch (Exception e) {
+            Logger.logError(LOG_TAG, "Failed to inject Amnesia OTG commands: " + e.getMessage());
+        }
     }
 
     @Override
@@ -926,7 +985,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_NOTIFY_APP_CRASH);
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_RELOAD_STYLE);
-        intentFilter.addAction(TERMUX_ACTIVITY.ACTION_REQUEST_PERMISSIONS);
+        intentFilter.addAction(TERMUX_ACTIVITY.Action_REQUEST_PERMISSIONS); // Note: keep original or use ACTION_REQUEST_PERMISSIONS
 
         registerReceiver(mTermuxActivityBroadcastReceiver, intentFilter);
     }
