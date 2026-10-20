@@ -559,7 +559,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     private void saveTerminalToolbarTextInput(Bundle savedInstanceState) {
-        if, (savedInstanceState == null) return;
+        if (savedInstanceState == null) return;
 
         final EditText textInputView = findViewById(R.id.terminal_toolbar_text_input);
         if (textInputView != null) {
