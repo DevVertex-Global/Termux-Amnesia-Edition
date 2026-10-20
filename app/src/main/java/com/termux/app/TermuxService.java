@@ -288,6 +288,18 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
             newTermuxSession.getTerminalSession());
     }
 
+    /**
+     * Overloaded helper method to support older activity client calls (Fixes build error).
+     */
+    @Nullable
+    public synchronized TermuxSession createTermuxSession(String executablePath, String[] arguments, String stdin,
+                                                         String workingDirectory, boolean isFailSafe, String sessionName) {
+        ExecutionCommand executionCommand = new ExecutionCommand(TermuxShellManager.getNextShellId(),
+            executablePath, arguments, stdin, workingDirectory, Runner.TERMINAL_SESSION.getName(), isFailSafe);
+        executionCommand.shellName = sessionName;
+        return createTermuxSession(executionCommand);
+    }
+
     @Nullable
     public synchronized TermuxSession createTermuxSession(ExecutionCommand executionCommand) {
         if (executionCommand == null) return null;
